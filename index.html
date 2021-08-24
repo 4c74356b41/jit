@@ -126,28 +126,30 @@
             
             ---
             
-            If you were using `deploymentOutputs` you also need to remove steps that were using that.  
-            You also need to convert script bicep steps into the same task (and optionally remove bicep transpile steps)
+            Convert bicep script steps into the same task
+            Optionally remove bicep transpile steps
+            If you were using `deploymentOutputs` you need to remove steps using it
+            
 
-            ```yaml
+            ```yaml [1,4-8]
             task: AzureCLI@2
             inputs:
-              azureSubscription: %sub%
+              azureSubscription: xxx
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
                 az deployment group create -g yyy --template-file azuredeploy.bicep --parameters keyVaultName=%param1%
             ```
 
-            ```yaml [3,4,7]
+            ```yaml [1,4-7]
             task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
             inputs:
               azureSubscription: xxx
               resourceGroupName: yyy
               location: region
-              csmFile: '../azuredeploy.bicep'
+              csmFile: azuredeploy.bicep
               overrideParameters: '-keyVaultName %param1%'
-            ```   
+            ```
             
             -----
 
