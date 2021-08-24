@@ -123,12 +123,12 @@
               csmParametersFile: '../azuredeploy.parameters.json'
               deploymentOutputs: deployment_output
             ```    
-            
+
             ---
-            
-            Convert bicep script steps into the same task
-            If you were using `deploymentOutputs` remove steps using it
-            Optionally remove bicep transpile steps
+
+            Remove `deploymentOutputs` steps  
+            Remove bicep transpile steps (optionally)
+            Convert bicep script steps into jit consumer task
 
             ```yaml [1,4-8]
             task: AzureCLI@2
