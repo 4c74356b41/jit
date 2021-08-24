@@ -29,11 +29,12 @@
           data-separator-vertical="---"
         >
           <textarea data-template>
+
             # JiT service principals
             ## for ci\cd pipelines 
 
             -----
-            
+
             ### Current situation
 
             - ~100 service principals currently in use <!-- .element: class="fragment" -->
@@ -43,37 +44,37 @@
             - service principals cant easily be linked to service connections <!-- .element: class="fragment" -->
             - not following "least security principle" <!-- .element: class="fragment" -->
             - no review process (hard to implement one) <!-- .element: class="fragment" -->
-            
+
             -----
-            
+
             ### Risks with maintaining existing solution
-            
+
             ---
-            
+
             #### Scaling issues
-            
+
             it will get progressively harder to maintain existing solution as we scale as the process is 100% manual
-            
+
             ---
-            
+
             #### Miss usage and permission sprawl
-            
+
             right now there 12 different service connections role assignments one of the production subscriptions (an example)
-            
+
             ---
-            
+
             #### Extensive attack surface
-            
+
             each service principal carries a risk of being compromised. potentially even a dev one can have access to production subscriptions
-     
+
             -----
-            
+
             ### Proposed solution
-            
+
             Just-in-Time service principals generated during the build and destroyed right after the build finishes 
-            
+
             -----
-            
+
             ### Benefits of JiT approach
 
             - fully automated approach that can scale almost indefinitely <!-- .element: class="fragment" -->
@@ -89,17 +90,40 @@
             ### Architecture
 
             <img data-src="Untitled-2021-08-24-09571.png" height="80%" width="80%" />
-           
-            
+
             -----
             
-            ### Downsides
+            ### Migration example
             
+            ```yaml [1]
+            - task: AzureResourceGroupDeployment@2
+              inputs:
+                azureSubscription: xxx
+                resourceGroupName: yyy
+                location: region
+                csmFile: '../azuredeploy.json'
+                csmParametersFile: '../azuredeploy.parameters.json'
+            ```
+            
+            ```yaml [1]
+            - task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
+              inputs:
+                azureSubscription: xxx
+                resourceGroupName: yyy
+                location: region
+                csmFile: '../azuredeploy.json'
+                csmParametersFile: '../azuredeploy.parameters.json'
+            ```
+            
+            -----
+
+            ### Downsides
+
             - needs migration (effort from developers and infrastructure team) <!-- .element: class="fragment" -->
             - needs development time from infrastructure team <!-- .element: class="fragment" -->
             - introduces external dependencies to pipelines <!-- .element: class="fragment" -->
             - still possible to use maliciously (can somewhat be mitigated in code) <!-- .element: class="fragment" -->
-            
+
           </textarea>
         </section>
       </div>
