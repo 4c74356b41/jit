@@ -53,7 +53,7 @@
 
             #### Scaling issues
 
-            it will get progressively harder to maintain existing solution as we scale as the process is 100% manual
+            it will get progressively harder to maintain existing solution with growth as the process is 100% manual
 
             ---
 
@@ -65,13 +65,14 @@
 
             #### Extensive attack surface
 
-            each service principal carries a risk of being compromised. potentially even a dev one can have access to production subscriptions
+            each service principal carries a risk of being compromised  
+            dev ones might have access to production subscriptions
 
             -----
 
             ### Proposed solution
 
-            Just-in-Time service principals generated during the build and destroyed right after the build finishes 
+            Just-in-Time service principals generated during the build and destroyed after the build finishes 
 
             -----
 
@@ -149,7 +150,7 @@
               csmFile: azuredeploy.bicep
               overrideParameters: '-keyVaultName %param1%'
             ```
-            
+
             -----
 
             ### Downsides
