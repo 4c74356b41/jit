@@ -95,7 +95,22 @@
             
             ### Migration example
             
-            ```yaml [1-2]
+            Add the following snippet to the pipeline
+            
+            ```yaml
+            task: m-kopa.azure-jit-access-generator.azure-jit-access.azure-jit-access-generator@1
+            displayName: 'Azure just-in-time service principal generator'
+            inputs:
+              AzureFunctionName: ${{ parameters.functionName }}
+              AzureFunctionCode: ${{ parameters.functionCode }}
+              AzureScopes: ${{ parameters.scopes }}
+            ```
+
+            ---
+
+            modify the arm template deployment steps:
+
+            ```yaml [1|2|9]
             task: AzureResourceGroupDeployment@2
             task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
             inputs:
@@ -104,8 +119,9 @@
               location: region
               csmFile: '../azuredeploy.json'
               csmParametersFile: '../azuredeploy.parameters.json'
-            ```
-            
+              deploymentOutputs: deployment_output
+            ```    
+
             -----
 
             ### Downsides
