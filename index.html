@@ -105,10 +105,12 @@
               AzureFunctionCode: ${{ parameters.functionCode }}
               AzureScopes: ${{ parameters.scopes }}
             ```
+            
+            `AzureScopes` is the only tricky part
 
             ---
 
-            modify the arm template deployment steps:
+            modify the arm template deployment step(s):
 
             ```yaml [1|2|9]
             task: AzureResourceGroupDeployment@2
