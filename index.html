@@ -35,34 +35,49 @@
             -----
             
             ### Current situation
-            - Service acounts in use currently:
-            * M-KOPAnet 360: 44
-            * M-KOPA software engineering: 33
-            * Data Services: 11
-            - accounts not linked to owners
+            - ~100 service principals currently in use
+            - accounts can not be linked to owners
             - account names are not following the same naming scheme
             - service principal names are meaningless guids
+            - service principals cant easily be linked to service connections
             - not following "least security principle"
             - no review process (hard to implement one)
             
             -----
             
-            Vertical slides are separated by `- - -`
+            ### Risks with maintaining existing solution
             
             ---
             
-            Vertical slides are separated by `- - -` .
+            #### Scaling issues
+            
+            it will get progressively harder to maintain existing solution as we scale as the process is 100% manual
             
             ---
             
-            Vertical slides are separated by `- - -` ..
+            #### Miss usage and permission sprawl
+            
+            right now there 12 different service connections role assignments on production subscription
+            
+            ---
+            
+            #### Extensive attack surface
+            
+            each service principal carries a risk of being compromised. potentially even a dev one can have access to production subscriptions
      
             -----
             
-         
+            ### Proposed solution
+            
+            Just-in-Time service principals generated during the build and destroyed right after the build finishes 
             
             -----
             
+            ### Benefits of JiT approach
+            
+            - fully automated approach
+            - can easily scale almost indefinitely
+            - service principals are short-lived (3h max, customizable)
 
             # Questions
 
