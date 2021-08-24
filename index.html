@@ -95,24 +95,15 @@
             
             ### Migration example
             
-            ```yaml [1]
-            - task: AzureResourceGroupDeployment@2
-              inputs:
-                azureSubscription: xxx
-                resourceGroupName: yyy
-                location: region
-                csmFile: '../azuredeploy.json'
-                csmParametersFile: '../azuredeploy.parameters.json'
-            ```
-            
-            ```yaml [1]
-            - task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
-              inputs:
-                azureSubscription: xxx
-                resourceGroupName: yyy
-                location: region
-                csmFile: '../azuredeploy.json'
-                csmParametersFile: '../azuredeploy.parameters.json'
+            ```yaml [1-2]
+            task: AzureResourceGroupDeployment@2
+            task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
+            inputs:
+              azureSubscription: xxx
+              resourceGroupName: yyy
+              location: region
+              csmFile: '../azuredeploy.json'
+              csmParametersFile: '../azuredeploy.parameters.json'
             ```
             
             -----
