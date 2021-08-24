@@ -127,9 +127,8 @@
             ---
             
             Convert bicep script steps into the same task
+            If you were using `deploymentOutputs` remove steps using it
             Optionally remove bicep transpile steps
-            If you were using `deploymentOutputs` you need to remove steps using it
-            
 
             ```yaml [1,4-8]
             task: AzureCLI@2
