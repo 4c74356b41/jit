@@ -75,17 +75,29 @@
             
             ### Benefits of JiT approach
             
-            - fully automated approach
-            - can easily scale almost indefinitely
-            - service principals are short-lived (3h max, customizable)
-            - virtually no attack surface
-            - same AzDo task for arm and bicep deployments
+            - fully automated approach that can scale almost indefinitely
+            - short-lived service principals with certificate authentication
+            - follows "least security principle"
+            - pipeline permissions are easily auditable
+            - virtually no attack surface and no permission sprawl
+            - merge multiple common tasks into one (arm, bicep, export variables, etc)
             - relatively easy migration path
             
             -----
 
             ### Architecture
 
+            ### TODO
+            
+            -----
+            
+            ### Downsides
+            
+            - needs migration (effort from developers and infrastructure team)
+            - needs development time from infrastructure team
+            - introduces external dependencies to pipelines
+            - still possible to use maliciously (can somewhat be mitigated in code)
+            
           </textarea>
         </section>
       </div>
