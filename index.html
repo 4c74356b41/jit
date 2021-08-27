@@ -148,10 +148,11 @@
                 az deployment group create -g yyy --template-file azuredeploy.bicep --parameters keyVaultName=%param1%
             ```
 
-            ```yaml [1,4-7]
+            ```yaml [1,5-7]
             task: m-kopa.azure-jit-access-consumer.azure-jit-access.azure-jit-access-consumer@1
             inputs:
-              azureSubscription: xxx
+            # service connection name might be different from subscription name
+              azureSubscription: xxx 
               resourceGroupName: yyy
               location: region
               csmFile: azuredeploy.bicep
