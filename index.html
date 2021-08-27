@@ -99,12 +99,19 @@
             Insert the following snippet anywhere in the pipeline before the deployment steps:
             
             ```yaml
+            variables:
+            - group: secops # provided for everyone to use
+            ...
             task: m-kopa.azure-jit-access-generator.azure-jit-access.azure-jit-access-generator@1
-            displayName: 'Azure just-in-time service principal generator'
             inputs:
-              AzureFunctionName: ${{ parameters.functionName }}
-              AzureFunctionCode: ${{ parameters.functionCode }}
-              AzureScopes: ${{ parameters.scopes }}
+              AzureFunctionName: $(functionName)
+              AzureFunctionCode: $(functionCode)
+              AzureScopes: |
+                /subscriptions/xxx/resourceGroups/%rg%
+                /subscriptions/yyy
+                /subscriptions/zzz/resourceGroups/%rg%/providers/Microsoft.KeyVault/vaults/%kv%
+              
+
             ```
             
             `AzureScopes` is the only tricky part
