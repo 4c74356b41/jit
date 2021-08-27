@@ -104,8 +104,8 @@
             ...
             task: m-kopa.azure-jit-access-generator.azure-jit-access.azure-jit-access-generator@1
             inputs:
-              AzureFunctionName: $(functionName)
-              AzureFunctionCode: $(functionCode)
+              AzureFunctionName: $(functionName) # from variable group above
+              AzureFunctionCode: $(functionCode) # from variable group above
               AzureScopes: |
                 /subscriptions/xxx/resourceGroups/%rg%
                 /subscriptions/yyy
@@ -114,7 +114,7 @@
 
             ```
             
-            `AzureScopes` is the only tricky part
+            for most use cases `AzureScopes` would simply be a reference to the resource group of deployment (not so many cross subscription deployments)
 
             ---
 
