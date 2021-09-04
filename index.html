@@ -159,7 +159,25 @@
               csmFile: azuredeploy.bicep
               overrideParameters: '-keyVaultName %param1%'
             ```
+            
+            ---
+            
+            It is also possible to use temporary principal with az cli and azure powershell tasks, however its not possible to use in built-in tasks including deploy arm template, deploy azure function, etc
 
+            ```
+            - pwsh: |
+                Compress-Archive `
+                  -Path deployment\canary\artifacts\functions\* `
+                  -DestinationPath func.zip `
+                  -CompressionLevel NoCompression `
+                  -Force
+                Install-Module Az.Websites -Force
+                Connect-AzAccount `
+                  -AccessToken $env:ACCESS_TOKEN `
+                  -AccountId $env:APPLICATION_ID
+                Get-AzWebApp | Where-Object { $PSItem.Name -match "-iislog$" } |
+                  Publish-AzWebApp -ArchivePath func.zip -Force
+            ```
             -----
 
             ### Downsides
