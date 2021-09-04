@@ -162,18 +162,27 @@
             
             ---
             
-            It is also possible to use temporary principal with az cli and azure powershell tasks, however its not possible to use in built-in tasks including deploy arm template, deploy azure function, etc
+            It is also possible to use temporary principal with az cli and azure powershell tasks. You can either use the generated certificate:
+            
+            ```
+            $cert = Get-ChildItem "Cert:\CurrentUser\My" | Where-Object {
+                $PSItem.Subject -eq "CN=${env:RUN_ID}"
+            }
+            Install-Module Az.Resources -Force
+            Connect-AzAccount -ServicePrincipal `
+                -CertificateThumbprint $cert.Thumbprint `
+                -ApplicationId $env:APPLICATION_ID `
+                -TenantId $env:TENANT_ID
+            ```
+            
+            or the token:
 
             ```
             - pwsh: |
-                Compress-Archive `
-                  -Path functions\* `
-                  -DestinationPath func.zip 
-                Install-Module Az.Websites -Force
+                Install-Module Az.Resources -Force
                 Connect-AzAccount `
                   -AccessToken $env:ACCESS_TOKEN `
                   -AccountId $env:APPLICATION_ID
-                Publish-AzWebApp -ArchivePath func.zip xxx
             ```
             -----
 
