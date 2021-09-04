@@ -162,17 +162,16 @@
             
             ---
             
-            It is also possible to use temporary principal with az cli and azure powershell tasks. You can either use the generated certificate:
+            It is also possible to use temporary principal with az cli (needs some investigation) and azure powershell tasks. You can either use the generated certificate:
             
             ```
-            $cert = Get-ChildItem "Cert:\CurrentUser\My" | Where-Object {
-                $PSItem.Subject -eq "CN=${env:RUN_ID}"
-            }
-            Install-Module Az.Resources -Force
-            Connect-AzAccount -ServicePrincipal `
-                -CertificateThumbprint $cert.Thumbprint `
-                -ApplicationId $env:APPLICATION_ID `
-                -TenantId $env:TENANT_ID
+            - pwsh: |
+                $cert = ( Get-ChildItem Cert:\CurrentUser\My ).Where{ $PSItem.Subject -match $env:RUN_ID }
+                Install-Module Az.Resources -Force
+                Connect-AzAccount -ServicePrincipal `
+                    -CertificateThumbprint $cert.Thumbprint `
+                    -ApplicationId $env:APPLICATION_ID `
+                    -TenantId $env:TENANT_ID
             ```
             
             or the token:
