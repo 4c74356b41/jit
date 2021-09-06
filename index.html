@@ -186,9 +186,9 @@
                 openssl pkcs12 -in auth.pfx -out auth.pem `
                                -nodes -passin pass:$env:RUN_ID
                 az login --service-principal `
-                         --tenant $env:TENANT_ID `
-                         --username $env:APPLICATION_ID `
-                         --password auth.pem
+                  --tenant $env:TENANT_ID `
+                  --username $env:APPLICATION_ID `
+                  --password auth.pem
             ```
             
             ---
