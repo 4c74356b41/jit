@@ -179,7 +179,7 @@
             ---
             
             Az cli:
-            ```
+            ```bash
             - pwsh: |
                 Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
                   Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
