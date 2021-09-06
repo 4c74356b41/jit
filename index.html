@@ -179,7 +179,7 @@
             ---
             
             Az cli:
-            ```powershell
+            ```
             - pwsh: |
                 Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
                   Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
@@ -193,7 +193,7 @@
             
             ---
             
-            or the token (only available after consumer step):
+            or the token:
 
             ```powershell
             - pwsh: |
@@ -202,7 +202,8 @@
                   -AccessToken $env:ACCESS_TOKEN `
                   -AccountId $env:APPLICATION_ID
             ```
-            az cli can't use token directly
+            - only available after consumer step
+            - az cli can't use token directly
             -----
 
             ### Downsides
