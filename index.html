@@ -179,12 +179,12 @@
             ---
             
             Az cli:
-            ```yaml
+            ```
             - pwsh: |
                 Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
                   Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
                 openssl pkcs12 -in auth.pfx -out auth.pem `
-                               -nodes -passin pass:$env:RUN_ID
+                  -nodes -passin pass:$env:RUN_ID
                 az login --service-principal `
                   --tenant $env:TENANT_ID `
                   --username $env:APPLICATION_ID `
