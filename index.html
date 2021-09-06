@@ -166,7 +166,7 @@
             
             Powershell:
             
-            ```
+            ```powershell
             - pwsh: |
                 $cert = ( Get-ChildItem Cert:\CurrentUser\My ).Where{ $PSItem.Subject -match $env:RUN_ID }
                 Install-Module Az.Resources -Force
@@ -179,7 +179,7 @@
             ---
             
             Az cli:
-            ```
+            ```powershell
             - pwsh: |
                 Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
                   Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
@@ -195,7 +195,7 @@
             
             or the token (only available after consumer step):
 
-            ```
+            ```powershell
             - pwsh: |
                 Install-Module Az.Resources -Force
                 Connect-AzAccount `
