@@ -167,28 +167,26 @@
             Powershell:
             
             ```powershell
-            - pwsh: |
-                $cert = ( Get-ChildItem Cert:\CurrentUser\My ).Where{ $PSItem.Subject -match $env:RUN_ID }
-                Install-Module Az.Resources -Force
-                Connect-AzAccount -ServicePrincipal `
-                    -CertificateThumbprint $cert.Thumbprint `
-                    -ApplicationId $env:APPLICATION_ID `
-                    -TenantId $env:TENANT_ID
+            $cert = ( Get-ChildItem Cert:\CurrentUser\My ).Where{ $PSItem.Subject -match $env:RUN_ID }
+            Install-Module Az.Resources -Force
+            Connect-AzAccount -ServicePrincipal `
+                -CertificateThumbprint $cert.Thumbprint `
+                -ApplicationId $env:APPLICATION_ID `
+                -TenantId $env:TENANT_ID
             ```
             
             ---
             
             Az cli:
-            ```bash
-            - pwsh: |
-                Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
-                  Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
-                openssl pkcs12 -in auth.pfx -out auth.pem `
-                  -nodes -passin pass:$env:RUN_ID
-                az login --service-principal `
-                  --tenant $env:TENANT_ID `
-                  --username $env:APPLICATION_ID `
-                  --password auth.pem
+            ```powershell
+            Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
+              Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
+            openssl pkcs12 -in auth.pfx -out auth.pem `
+              -nodes -passin pass:$env:RUN_ID
+            az login --service-principal `
+              --tenant $env:TENANT_ID `
+              --username $env:APPLICATION_ID `
+              --password auth.pem
             ```
             
             ---
@@ -196,11 +194,10 @@
             or the token:
 
             ```powershell
-            - pwsh: |
-                Install-Module Az.Resources -Force
-                Connect-AzAccount `
-                  -AccessToken $env:ACCESS_TOKEN `
-                  -AccountId $env:APPLICATION_ID
+            Install-Module Az.Resources -Force
+            Connect-AzAccount `
+              -AccessToken $env:ACCESS_TOKEN `
+              -AccountId $env:APPLICATION_ID
             ```
             - only available after consumer step
             - az cli can't use token directly
