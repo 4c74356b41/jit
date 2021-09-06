@@ -162,7 +162,7 @@
             
             ---
             
-            It is also possible to use temporary principal with az cli (needs some investigation) and azure powershell tasks. You can either use the generated certificate:
+            It is also possible to use temporary principal with az cli and azure powershell tasks. You can either use the generated certificate:
             
             ```
             - pwsh: |
@@ -172,9 +172,15 @@
                     -CertificateThumbprint $cert.Thumbprint `
                     -ApplicationId $env:APPLICATION_ID `
                     -TenantId $env:TENANT_ID
+            
+            - pwsh: |
+                Get-ChildItem "Cert:\CurrentUser\My" | Where-Object { $PSItem.Subject -match $env:RUN_ID } | 
+                  Export-PfxCertificate -FilePath auth.pfx -Password ( ConvertTo-SecureString $env:RUN_ID -Force -AsPlainText )
+                openssl pkcs12 -in auth.pfx -out auth.pem -nodes -passin pass:$env:RUN_ID
+                az login --service-principal  --tenant $env:TENANT_ID --username $env:APPLICATION_ID --password auth.pem
             ```
             
-            or the token:
+            or the token (only available after consumer step):
 
             ```
             - pwsh: |
